@@ -1,0 +1,14 @@
+# Reference vectors for trantor-hash. `cargo run` regenerates
+# components/hash/HashVectors.roc from the pinned Rust implementations;
+# `cargo test` (run by `trantor test .`) fails if the committed file differs.
+[package]
+name = "trantor-hash-vectors"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+siphasher = "=1.0.3"
+rapidhash = { version = "=4.5.1", default-features = false }
+
+[workspace]

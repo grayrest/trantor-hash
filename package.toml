@@ -1,0 +1,29 @@
+# trantor-hash — structural hashes of any encodable value, in pure Roc.
+#
+# An ADD-ON package: it provides no driver. Pair it with a baseline:
+#
+#   [deps]
+#   trantor-cli  = { path = "../trantor-cli" }
+#   trantor-hash = { path = "../trantor-hash" }
+#
+# It replaces the compiler fork's `Hasher.new`/`finish`/`hash_of` patches
+# (notes/2026-09-14-s1-stdlib-roadmap-design-log.md in the trantor repo,
+# D-S1-2): hashing walks the derived encoder, which needs no patch and does not
+# blow up at compile time the way derived `to_hash` does on nested models.
+[package]
+name = "trantor-hash"
+version = "0.1.0"
+exports = ["Hash", "SipHash", "RapidHash"]
+
+# No interfaces and no host: everything is Roc. `HashFormat` is exported by the
+# component so `Hash` can import it, and kept out of the package's exports: its
+# state types appear in `Hash`'s signatures but are not a surface to build on.
+# `HashVectors` is generated test data (tests/vectors).
+[components.hash]
+kind = "roc"
+exports = ["Hash", "HashFormat", "SipHash", "RapidHash", "HashVectors"]
+
+# What `trantor test .` composes this add-on against. Never a dependency of
+# the apps that use it.
+[dev-deps]
+trantor-cli = { path = "../trantor-cli" }

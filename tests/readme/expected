@@ -1,0 +1,4 @@
+same request, same key: True
+different page, different key: True
+id is stable: True
+nullable and optional fields hash: True
