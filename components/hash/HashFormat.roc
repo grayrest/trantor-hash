@@ -208,8 +208,8 @@ HashFormat := [Default].{
 				Rapid(h) => Rapid(h.write(bytes))
 			}
 
-		write_u64 : Bytes, U64 -> Bytes
-		write_u64 = |hasher, word|
+		write_word : Bytes, U64 -> Bytes
+		write_word = |hasher, word|
 			match hasher {
 				Sip(h) => Sip(h.write_u64(word))
 				Rapid(h) => Rapid(h.write_u64(word))
@@ -247,7 +247,7 @@ HashFormat := [Default].{
 	}
 
 	write_u64 : State, U64 -> State
-	write_u64 = |state, word| State.{ hasher: Bytes.write_u64(state.hasher, word), empty: state.empty }
+	write_u64 = |state, word| State.{ hasher: Bytes.write_word(state.hasher, word), empty: state.empty }
 
 	write_u128 : State, U128 -> State
 	write_u128 = |state, value| write_u64(write_u64(state, value.to_u64_wrap()), value.shr_zf_wrap(64).to_u64_wrap())
